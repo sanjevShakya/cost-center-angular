@@ -1,0 +1,69 @@
+Arguments: 
+  /home/sanjeev/.nvm/versions/node/v8.11.1/bin/node /usr/local/bin/yarn start
+
+PATH: 
+  /home/sanjeev/.nvm/versions/node/v8.11.1/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+
+Yarn version: 
+  1.5.1
+
+Node version: 
+  8.11.1
+
+Platform: 
+  linux x64
+
+npm manifest: 
+  {
+    "name": "angular-phonecat",
+    "private": true,
+    "version": "0.0.0",
+    "description": "A tutorial application for AngularJS",
+    "repository": "https://github.com/angular/angular-phonecat",
+    "license": "MIT",
+    "devDependencies": {
+      "bower": "^1.7.7",
+      "http-server": "^0.9.0",
+      "jasmine-core": "^2.4.1",
+      "karma": "^0.13.22",
+      "karma-chrome-launcher": "^0.2.3",
+      "karma-firefox-launcher": "^0.1.7",
+      "karma-jasmine": "^0.3.8",
+      "protractor": "^4.0.9"
+    },
+    "scripts": {
+      "postinstall": "bower install",
+      "prestart": "npm install",
+      "start": "http-server ./app -a localhost -p 8000 -c-1",
+      "pretest": "npm install",
+      "test": "karma start karma.conf.js",
+      "test-single-run": "karma start karma.conf.js --single-run",
+      "preupdate-webdriver": "npm install",
+      "update-webdriver": "webdriver-manager update",
+      "preprotractor": "npm run update-webdriver",
+      "protractor": "protractor e2e-tests/protractor.conf.js",
+      "update-index-async": "node -e \"var fs=require('fs'),indexFile='app/index-async.html',loaderFile='app/bower_components/angular-loader/angular-loader.min.js',loaderText=fs.readFileSync(loaderFile,'utf-8').split(/sourceMappingURL=angular-loader.min.js.map/).join('sourceMappingURL=bower_components/angular-loader/angular-loader.min.js.map'),indexText=fs.readFileSync(indexFile,'utf-8').split(/\\/\\/@@NG_LOADER_START@@[\\s\\S]*\\/\\/@@NG_LOADER_END@@/).join('//@@NG_LOADER_START@@\\n'+loaderText+'    //@@NG_LOADER_END@@');fs.writeFileSync(indexFile,indexText);\""
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
+
+Trace: 
+  Error: Command failed.
+  Exit code: 1
+  Command: sh
+  Arguments: -c http-server ./app -a localhost -p 8000 -c-1
+  Directory: /home/sanjeev/Projects/Leapfrog/angular-phonecat
+  Output:
+  
+      at ProcessTermError.MessageError (/usr/local/lib/node_modules/yarn/lib/cli.js:186:110)
+      at new ProcessTermError (/usr/local/lib/node_modules/yarn/lib/cli.js:226:113)
+      at ChildProcess.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:30281:17)
+      at emitTwo (events.js:126:13)
+      at ChildProcess.emit (events.js:214:7)
+      at maybeClose (internal/child_process.js:925:16)
+      at Process.ChildProcess._handle.onexit (internal/child_process.js:209:5)
