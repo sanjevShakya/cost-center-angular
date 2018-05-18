@@ -1,0 +1,69 @@
+.cost-center-toolbar .glyphicon {
+  margin-right: 5px;
+}
+
+.cost-center-toolbar .btn {
+  max-width: 130px;
+}
+
+.cost-center-toolbar .add-cost-center {
+  background-color: #27ae60;
+  color: #fff;
+  font-weight: 500;
+}
+
+.cost-center-container .cost-center-checkbox {
+  width: 18px;
+  height: 18px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.add-cost-center-container .btn-back {
+  color: #34495e;
+  text-decoration: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.add-cost-center-container .btn-back:hover {
+  color: #2c3e50;
+}
+
+.input-error {
+  color: #c0392b;
+  font-size: 12px;
+  padding: 3px 0;
+}
+
+.cost-center-container .pager {
+  margin: 0;
+}
+
+.cost-center-container .pager a {
+  cursor: pointer;
+}
+
+.cost-center-container .pager .disabled {
+  cursor: default;
+}
+
+.cost-center-container .pager .disabled:hover {
+  background: #fff;
+  color: #337ab7;
+}
+
+.cost-center-container .active {
+  padding: 2px 8px;
+  background: #27ae60;
+  font-weight: 600;
+  color: #fff;
+  border-radius: 4px;
+}
+
+.cost-center-container .in-active {
+  background: #7f8c8d;
+  color: #fff;
+  font-weight: 600;
+  padding: 2px;
+}

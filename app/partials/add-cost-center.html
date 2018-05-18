@@ -1,0 +1,59 @@
+<div class="container add-cost-center-container">
+  <h3>
+    <a ui-sref="cost-center()" class="btn-back">
+      <span class="glyphicon glyphicon-menu-left"></span>
+    </a>Add Cost Center</h3>
+  <form novalidate name="costCenterForm" class="form-horizontal" ng-submit="cs.onAddCostCenterSubmit(costCenterForm)">
+    <div class="form-group">
+      <label class="col-xs-2 control-label">Code*</label>
+      <div class="col-xs-6">
+        <input required name="code" type="text" placeholder="Code" class="form-control" ng-model="cs.newCostCenter.code" />
+        <span class="input-error" ng-show="cs.costCenterForm.code.$error.required && cs.costCenterForm.$submitted">
+          This field is required
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-xs-2 control-label">Description</label>
+      <div class="col-xs-6">
+        <input ng-model="cs.newCostCenter.description" placeholder="Description" class="form-control" name="description" type="text"
+        />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-xs-2 control-label">Company Code *</label>
+      <div class="col-xs-6">
+        <input required ng-model="cs.newCostCenter.companyCode" placeholder="Company Code" class="form-control" name="companyCode"
+          type="text" />
+        <span class="input-error" ng-show="cs.costCenterForm.companyCode.$error.required && cs.costCenterForm.$submitted">This field is required</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-xs-2 control-label">Profit Center</label>
+      <div class="col-xs-6">
+        <input ng-model="cs.newCostCenter.profitCenter" placeholder="Company Code" class="form-control" name="profitCenter" type="text"
+        />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <div class="checkbox">
+          <label>
+            <input ng-model="cs.newCostCenter.status" name="status" type="checkbox"> Status
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="button" class="btn btn-default">Cancel</button>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,61 @@
+<div class="container cost-center-container">
+  <h3 class="title">Cost Center</h3>
+  <table class="table table-striped table-bordered table-condensed table-hover">
+    <thead>
+      <tr>
+        <th>&nbsp;</th>
+        <th>Code</th>
+        <th>Description</th>
+        <th>Company Code</th>
+        <th>Profit Center</th>
+        <th>Created Date</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="costCenter in cs.costCenters" ng-click="cs.onShowDetail(costCenter.id)">
+        <td ng-click="cs.onCostCenterSelect($event, costCenter)">
+          <input class="cost-center-checkbox" type="checkbox" ng-model="costCenter.isSelected" />
+        </td>
+        <td>{{costCenter.code}}</td>
+        <td>{{costCenter.description}}</td>
+        <td>{{costCenter.companyCode}}</td>
+        <td>{{costCenter.profitCenter}}</td>
+        <td>{{costCenter.createdDate}}</td>
+        <td>
+          <span ng-class="costCenter.status ? 'active': 'in-active'">{{costCenter.statusName}}</span>
+        </td>
+        <td>
+          <button ng-click="cs.onDeleteClick($event, costCenter)" type="button" class="btn btn-default" aria-label="Delete">
+            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="row cost-center-toolbar">
+    <div class="col-xs-2">
+      <button type="button" ng-click="cs.onActivate()" class="btn btn-primary btn-block">
+        <span class="glyphicon glyphicon-ok"></span>Activate</button>
+    </div>
+    <div class="col-xs-2">
+      <button type="button" ng-click="cs.onDeactivate()" class="btn btn-warning btn-block">
+        <span class="glyphicon glyphicon-remove"></span>Deactivate</button>
+    </div>
+    <div class="col-xs-2">
+      <button ng-click="cs.onAddCostCenter()" type="button" class="btn btn-default btn-block add-cost-center">Add Cost Center</button>
+    </div>
+    <div class="col-xs-offset-2"></div>
+    <div class="col-xs-4">
+      <ul class="pager">
+        <li>
+          <a ng-click="cs.fetchPrevPage(cs.page - 1)" ng-class="cs.page <= 1 ? 'disabled' : ''">Previous</a>
+        </li>
+        <li>
+          <a ng-click="cs.fetchNextPage(cs.page + 1)">Next</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
