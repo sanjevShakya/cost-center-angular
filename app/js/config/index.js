@@ -1,4 +1,4 @@
 angular.module('costcenter.config', []).constant('ENV', {
-  API: 'http://localhost:3000/data',
+  API: 'https://cost-center-service.herokuapp.com/cost-centers',
   HOST: 'http://localhost:8000',
 });
