@@ -38,6 +38,10 @@
   padding: 150px 0;
 }
 
+.cost-center-container table tr {
+  cursor: pointer;
+}
+
 .empty-cost-center-container i {
   font-size: 25px;
 }
