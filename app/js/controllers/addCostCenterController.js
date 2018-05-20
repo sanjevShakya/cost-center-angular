@@ -16,6 +16,8 @@ app.controller('AddCostCenterController', [
   'AddCostCenterService',
   function($state, AddCostCenterService) {
     const cs = this;
+    cs.isSubmittingForm = false;
+
     const preparePayloadToRequest = function(costCenter) {
       return {
         code: costCenter.code,
@@ -31,6 +33,10 @@ app.controller('AddCostCenterController', [
       status: false,
     };
 
+    cs.onCancelAddCostCenter = function() {
+      $state.go('cost-center');
+    };
+
     cs.onAddCostCenterSubmit = function(costCenterForm) {
       cs.costCenterForm = costCenterForm;
 
@@ -41,10 +47,13 @@ app.controller('AddCostCenterController', [
         return;
       }
 
+      cs.isSubmittingForm = true;
+      
       AddCostCenterService.createCostCenter(
         preparePayloadToRequest(cs.newCostCenter)
       )
         .then(function(data) {
+          cs.isSubmittingForm = false;
           $state.go('cost-center');
         })
         .catch(function(error) {
