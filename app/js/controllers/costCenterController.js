@@ -9,13 +9,26 @@ app.service('CostCenterService', [
       return COST_CENTER_RESOURCE + '/' + id;
     };
 
-    cs.fetchCostCenters = function(page, pageSize) {
+    cs.fetchAllCostCenters = function(search) {
+      if (!search) {
+        search = '';
+      }
+
+      return $http.get(COST_CENTER_RESOURCE + '?q=' + search);
+    };
+
+    cs.fetchCostCenters = function(page, pageSize, search) {
+      if (!search) {
+        search = '';
+      }
       return $http.get(
         COST_CENTER_RESOURCE +
           '?_sort=createdAt&_order=desc&_page=' +
           page +
           '&_limit=' +
-          pageSize
+          pageSize +
+          '&q=' +
+          search
       );
     };
 
@@ -38,15 +51,25 @@ app.controller('CostCenterController', [
 
   function($http, $state, $location, APP_CONSTANTS, CostCenterService) {
     const cs = this;
+    cs.searchValue = '';
+    cs.isSearchActive = false;
+    cs.isListFetching = false;
+    cs.isActivatingRecords = false;
+    cs.isDeactivatingRecords = false;
+    cs.isVisible = false;
     cs.page = 1;
     cs.hasMore = true;
     cs.pageSize = APP_CONSTANTS.pageSize;
     cs.costCenters = [];
+    cs.totalCostCenters = 0;
+    cs.totalPages = 0;
+    cs.pages = [];
 
     const prepareCostCenterData = function(data) {
       return Object.assign(
         {
           isSelected: false,
+          isDeleting: false,
           createdDate: new Date(data.createdAt).toLocaleDateString(),
           statusName: data.status
             ? APP_CONSTANTS.status.active
@@ -56,12 +79,39 @@ app.controller('CostCenterController', [
       );
     };
 
+    const fetchTotalCostCenters = function() {
+      CostCenterService.fetchAllCostCenters(cs.searchValue)
+        .then(function(data) {
+          cs.totalCostCenters = data.data.length || 0;
+          cs.totalPages = Math.ceil(cs.totalCostCenters / cs.pageSize);
+          if (cs.totalPages) {
+            const newPages = [];
+            for (var i = 1; i <= cs.totalPages; i++) {
+              newPages.push(i);
+            }
+            cs.pages = newPages;
+          }
+        })
+        .catch(function(err) {
+          // TODO handle error
+
+          console.log(err);
+        });
+    };
+
     const init = function() {
+      cs.isListFetching = true;
+
+      fetchTotalCostCenters();
+
       CostCenterService.fetchCostCenters(cs.page, cs.pageSize)
         .then(function(data) {
+          cs.isListFetching = false;
           cs.costCenters = data.data.map(prepareCostCenterData);
         })
         .catch(function(err) {
+          cs.isListFetching = false;
+          // TODO handle error
           console.log(err);
         });
     };
@@ -79,8 +129,34 @@ app.controller('CostCenterController', [
       };
     };
 
+    const fetchCostCenters = function(page, searchValue) {
+      if (!page) {
+        page = cs.page;
+      }
+
+      if (!searchValue) {
+        searchValues = cs.searchValue;
+      }
+
+      CostCenterService.fetchCostCenters(page, cs.pageSize, searchValue)
+        .then(function(data) {
+          cs.costCenters = data.data.map(prepareCostCenterData);
+          cs.page = page;
+          if (cs.costCenters.length < cs.pageSize && cs.page !== 1) {
+            cs.hasMore = false;
+          } else {
+            cs.hasMore = true;
+          }
+          cs.isSearchActive = false;
+        })
+        .catch(function(error) {
+          // TODO handle error
+          console.log(error);
+          cs.isSearchActive = false;
+        });
+    };
+
     cs.onShowDetail = function(id) {
-      console.log('id', id);
       $state.go('cost-center-detail', { costCenterId: id });
     };
 
@@ -112,6 +188,7 @@ app.controller('CostCenterController', [
       if (!inActiveCostCenters) {
         return;
       }
+      cs.isActivatingRecords = true;
 
       Promise.all(
         inActiveCostCenters.map(function(costCenter) {
@@ -122,13 +199,13 @@ app.controller('CostCenterController', [
         })
       )
         .then(function(data) {
-          init();
+          fetchCostCenters();
+          cs.isActivatingRecords = false;
         })
         .catch(function(error) {
+          // TODO handle error
           console.log(error);
         });
-
-      // TODO put req
     };
 
     cs.onDeactivate = function() {
@@ -155,6 +232,8 @@ app.controller('CostCenterController', [
         return;
       }
 
+      cs.isDeactivatingRecords = true;
+
       Promise.all(
         activeCostCenters.map(function(costCenter) {
           return CostCenterService.markStatusCostCenter(
@@ -164,9 +243,11 @@ app.controller('CostCenterController', [
         })
       )
         .then(function(data) {
-          init();
+          fetchCostCenters();
+          cs.isDeactivatingRecords = false;
         })
         .catch(function(error) {
+          // TODO handle error
           console.log(error);
         });
     };
@@ -177,27 +258,25 @@ app.controller('CostCenterController', [
 
     cs.onDeleteClick = function($event, costCenter) {
       $event.stopPropagation();
+
       CostCenterService.deleteCostCenter(costCenter.id)
         .then(function(data) {
-          init();
+          fetchCostCenters();
         })
         .catch(function(error) {
+          // TODO handle error
           console.log(error);
         });
     };
 
     cs.fetchPage = function(page) {
-      CostCenterService.fetchCostCenters(page, cs.pageSize)
-        .then(function(data) {
-          cs.costCenters = data.data.map(prepareCostCenterData);
-          cs.page = page;
-          if (cs.costCenters.length <= 0) {
-            cs.hasMore = false;
-          }
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
+      fetchCostCenters(page);
+    };
+
+    cs.onSearchChange = function() {
+      cs.isSearchActive = true;
+      fetchCostCenters(cs.page, cs.searchValue);
+      fetchTotalCostCenters();
     };
 
     cs.fetchNextPage = function(page) {
