@@ -6,7 +6,7 @@ app.config([
   function($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('cost-center', {
-        url: '',
+        url: '/cost-center',
         controllerAs: 'cs',
         controller: 'CostCenterController',
         templateUrl: 'partials/cost-center.html',
@@ -23,5 +23,22 @@ app.config([
         controller: 'AddCostCenterController',
         templateUrl: 'partials/add-cost-center.html',
       });
+
+    $urlRouterProvider.otherwise('/cost-center');
+  },
+]);
+
+app.component('spinner', {
+  templateUrl: 'partials/spinner.html',
+  controller: 'SpinnerController',
+  controllerAs: 'vm',
+  bindings: {
+    visible: '=',
+  },
+});
+
+app.controller('SpinnerController', [
+  function() {
+    const vm = this;
   },
 ]);
