@@ -6,7 +6,7 @@ angular
       return {
         rootUrl: ENV.API,
         hostName: ENV.HOST,
-        pageSize: 10,
+        pageSize: 8,
         status: {
           active: 'Active',
           inActive: 'Inactive',
