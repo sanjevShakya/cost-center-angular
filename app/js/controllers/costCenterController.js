@@ -135,7 +135,7 @@ app.controller('CostCenterController', [
       }
 
       if (!searchValue) {
-        searchValues = cs.searchValue;
+        searchValue = cs.searchValue;
       }
 
       CostCenterService.fetchCostCenters(page, cs.pageSize, searchValue)
@@ -199,7 +199,7 @@ app.controller('CostCenterController', [
         })
       )
         .then(function(data) {
-          fetchCostCenters();
+          fetchCostCenters(cs.page, cs.searchValue);
           cs.isActivatingRecords = false;
         })
         .catch(function(error) {
@@ -243,7 +243,7 @@ app.controller('CostCenterController', [
         })
       )
         .then(function(data) {
-          fetchCostCenters();
+          fetchCostCenters(cs.page, cs.searchValue);
           cs.isDeactivatingRecords = false;
         })
         .catch(function(error) {
@@ -261,7 +261,7 @@ app.controller('CostCenterController', [
 
       CostCenterService.deleteCostCenter(costCenter.id)
         .then(function(data) {
-          fetchCostCenters();
+          fetchCostCenters(cs.page, cs.searchValue);
         })
         .catch(function(error) {
           // TODO handle error
