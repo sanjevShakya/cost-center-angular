@@ -1,6 +1,14 @@
 <div class="container cost-center-container">
   <h3 class="title">Cost Center</h3>
-  <table class="table table-striped table-bordered table-condensed table-hover">
+  <div class="search-container">
+    <input ng-change="cs.onSearchChange()" name="cost-center-search" ng-model="cs.searchValue" ng-model-options="{ debounce: 500 }"
+      class="form-control mr-sm-2 cost-container-search" type="search" placeholder="Search" aria-label="Search">
+    <spinner visible="cs.isSearchActive"></spinner>
+  </div>
+  <div ng-hide="!cs.isListFetching" class="empty-cost-center-container">
+    <spinner visible="cs.isListFetching"></spinner>
+  </div>
+  <table ng-hide="cs.isListFetching" class="table table-hover table-sm table-bordered table-hover">
     <thead>
       <tr>
         <th>&nbsp;</th>
@@ -27,33 +35,45 @@
           <span ng-class="costCenter.status ? 'active': 'in-active'">{{costCenter.statusName}}</span>
         </td>
         <td>
-          <button ng-click="cs.onDeleteClick($event, costCenter)" type="button" class="btn btn-default" aria-label="Delete">
-            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+          <button ng-click="cs.onDeleteClick($event, costCenter)" type="button" class="btn btn-default trash-btn" aria-label="Delete">
+            <i class="fas fa-trash-alt" aria-hidden="true"></i>
           </button>
         </td>
       </tr>
     </tbody>
   </table>
   <div class="row cost-center-toolbar">
-    <div class="col-xs-2">
+    <div class="col-md-2">
       <button type="button" ng-click="cs.onActivate()" class="btn btn-primary btn-block">
-        <span class="glyphicon glyphicon-ok"></span>Activate</button>
+        <span ng-show="!cs.isActivatingRecords">
+          <i class="fas fa-check"></i>Activate</span>
+        <spinner visible="cs.isActivatingRecords"></spinner>
+      </button>
     </div>
-    <div class="col-xs-2">
+    <div class="col-md-2">
       <button type="button" ng-click="cs.onDeactivate()" class="btn btn-warning btn-block">
-        <span class="glyphicon glyphicon-remove"></span>Deactivate</button>
+        <span ng-show="!cs.isDeactivatingRecords">
+          <i class="fas fa-times"></i>Deactivate</span>
+        <spinner visible="cs.isDeactivatingRecords"></spinner>
+      </button>
     </div>
-    <div class="col-xs-2">
+    <div class="col-md-2">
       <button ng-click="cs.onAddCostCenter()" type="button" class="btn btn-default btn-block add-cost-center">Add Cost Center</button>
     </div>
-    <div class="col-xs-offset-2"></div>
-    <div class="col-xs-4">
-      <ul class="pager">
-        <li>
-          <a ng-click="cs.fetchPrevPage(cs.page - 1)" ng-class="cs.page <= 1 ? 'disabled' : ''">Previous</a>
+    <div class="col-md-6">
+      <ul class="pagination">
+        <li class="page-item">
+          <a class="page-link" ng-click="cs.fetchPrevPage(cs.page - 1)" ng-class="cs.page <= 1 ? 'disabled' : ''">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
         </li>
-        <li>
-          <a ng-click="cs.fetchNextPage(cs.page + 1)">Next</a>
+        <li class="page-item" ng-class="cs.page === page ? 'active' : ''" ng-repeat="page in cs.pages">
+          <a ng-click="cs.fetchPage(page)" class="page-link">{{page}}</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" ng-click="cs.fetchNextPage(cs.page + 1)">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
         </li>
       </ul>
     </div>

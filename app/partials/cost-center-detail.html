@@ -1,49 +1,50 @@
-<div class="container">
-  <h2>
+<div class="container cost-center-container">
+  <h3 class="title">
     <a ui-sref="cost-center()" class="btn-back">
-      <span class="glyphicon glyphicon-menu-left"></span>
-    </a>Cost Center Detail</h2>
+      <i class="fas fa-chevron-left"></i>
+    </a>Cost Center Detail</h3>
+  <div class="container">
 
-  <div class="row">
-    <div class="col-xs-2">
-      <strong>Code :</strong>
+    <div class="row">
+      <div class="col-xs-2">
+        <strong>Code :</strong>
+      </div>
+      <div class="col-xs-10">{{cs.costCenterDetail.code}}</div>
     </div>
-    <div class="col-xs-10">{{cs.costCenterDetail.code}}</div>
-  </div>
 
-  <div class="row">
-    <div class="col-xs-2">
-      <strong>Description :</strong>
+    <div class="row">
+      <div class="col-xs-2">
+        <strong>Description :</strong>
+      </div>
+      <div class="col-xs-10">{{cs.costCenterDetail.description}}</div>
     </div>
-    <div class="col-xs-10">{{cs.costCenterDetail.description}}</div>
-  </div>
 
-  <div class="row">
-    <div class="col-xs-2">
-      <strong>Company Code :</strong>
+    <div class="row">
+      <div class="col-xs-2">
+        <strong>Company Code :</strong>
+      </div>
+      <div class="col-xs-10">{{cs.costCenterDetail.companyCode}}</div>
     </div>
-    <div class="col-xs-10">{{cs.costCenterDetail.companyCode}}</div>
-  </div>
 
-  <div class="row">
-    <div class="col-xs-2">
-      <strong>Profit center :</strong>
+    <div class="row">
+      <div class="col-xs-2">
+        <strong>Profit center :</strong>
+      </div>
+      <div class="col-xs-10">{{cs.costCenterDetail.profitCenter}}</div>
     </div>
-    <div class="col-xs-10">{{cs.costCenterDetail.profitCenter}}</div>
-  </div>
 
-  <div class="row">
-    <div class="col-xs-2">
-      <strong>Created At :</strong>
+    <div class="row">
+      <div class="col-xs-2">
+        <strong>Created At :</strong>
+      </div>
+      <div class="col-xs-10">{{cs.costCenterDetail.createdAt}}</div>
     </div>
-    <div class="col-xs-10">{{cs.costCenterDetail.createdAt}}</div>
-  </div>
 
-  <div class="row">
-    <div class="col-xs-2">
-      <strong>Status :</strong>
+    <div class="row">
+      <div class="col-xs-2">
+        <strong>Status :</strong>
+      </div>
+      <div class="col-xs-10">{{cs.costCenterDetail.status}}</div>
     </div>
-    <div class="col-xs-10">{{cs.costCenterDetail.status}}</div>
   </div>
-
 </div>

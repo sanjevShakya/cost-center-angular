@@ -1,15 +1,53 @@
-.cost-center-toolbar .glyphicon {
+.cost-center-toolbar .fa-check,
+.fa-times {
   margin-right: 5px;
 }
 
 .cost-center-toolbar .btn {
-  max-width: 130px;
+  max-width: 150px;
 }
 
 .cost-center-toolbar .add-cost-center {
-  background-color: #27ae60;
+  background-color: #2ecc71;
   color: #fff;
   font-weight: 500;
+  font-size: 14px;
+}
+
+.cost-container-search {
+  width: 25%;
+  margin-bottom: 20px;
+}
+
+.search-container {
+  position: relative;
+}
+
+.search-container .fa-spinner {
+  position: absolute;
+  top: 10px;
+  left: 205px;
+}
+
+.cost-center-toolbar .add-cost-center:hover {
+  background-color: #27ae60;
+}
+
+.cost-center-container .empty-cost-center-container {
+  text-align: center;
+  padding: 150px 0;
+}
+
+.empty-cost-center-container i {
+  font-size: 25px;
+}
+
+.cost-center-container thead {
+  color: #2c3e50;
+}
+
+.cost-center-container tbody {
+  color: #34495e;
 }
 
 .cost-center-container .cost-center-checkbox {
@@ -19,14 +57,14 @@
   cursor: pointer;
 }
 
-.add-cost-center-container .btn-back {
+.btn-back {
   color: #34495e;
   text-decoration: none;
   font-size: 20px;
   cursor: pointer;
 }
 
-.add-cost-center-container .btn-back:hover {
+.btn-back:hover {
   color: #2c3e50;
 }
 
@@ -34,6 +72,16 @@
   color: #c0392b;
   font-size: 12px;
   padding: 3px 0;
+}
+
+.cost-center-container .title {
+  font-size: 18px;
+  margin: 18px 0;
+}
+
+.add-cost-center-container .title {
+  font-size: 18px;
+  margin: 18px 0;
 }
 
 .cost-center-container .pager {
@@ -53,7 +101,7 @@
   color: #337ab7;
 }
 
-.cost-center-container .active {
+.cost-center-container table .active {
   padding: 2px 8px;
   background: #27ae60;
   font-weight: 600;
@@ -61,9 +109,43 @@
   border-radius: 4px;
 }
 
-.cost-center-container .in-active {
+.cost-center-container table .in-active {
   background: #7f8c8d;
   color: #fff;
   font-weight: 600;
   padding: 2px;
+}
+
+.cost-center-container table {
+  font-size: 14px;
+}
+
+.cost-center-container .trash-btn {
+  background-color: #fff;
+}
+
+.cost-center-container .fa-trash-alt {
+  color: #c0392b;
+}
+
+.cost-center-container .pagination {
+  float: right;
+}
+
+.btn {
+  font-size: 14px;
+}
+
+.btn-primary,
+.btn-warning {
+  color: #fff;
+}
+
+.btn-warning:hover {
+  color: #fff;
+}
+
+.page-link {
+  padding: 5px 7px;
+  font-size: 14px;
 }

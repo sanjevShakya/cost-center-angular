@@ -1,7 +1,7 @@
 <div class="container add-cost-center-container">
-  <h3>
+  <h3 class="title">
     <a ui-sref="cost-center()" class="btn-back">
-      <span class="glyphicon glyphicon-menu-left"></span>
+      <i class="fas fa-chevron-left"></i>
     </a>Add Cost Center</h3>
   <form novalidate name="costCenterForm" class="form-horizontal" ng-submit="cs.onAddCostCenterSubmit(costCenterForm)">
     <div class="form-group">
@@ -51,8 +51,17 @@
 
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
-        <button type="submit" class="btn btn-primary">Submit</button>
-        <button type="button" class="btn btn-default">Cancel</button>
+        <div class="row">
+          <div class="col-2">
+            <button type="submit" class="btn btn-primary btn-block">
+              <span ng-hide="cs.isSubmittingForm">Submit</span>
+              <spinner visible="cs.isSubmittingForm"></spinner>
+            </button>
+          </div>
+          <div class="col-2">
+            <button ng-click="cs.onCancelAddCostCenter()" type="button" class="btn btn-default btn-block">Cancel</button>
+          </div>
+        </div>
       </div>
     </div>
   </form>

@@ -19,6 +19,7 @@ app.controller('CostCenterDetailController', [
   'CostCenterDetailService',
   function($http, $stateParams, CostCenterDetailService) {
     const cs = this;
+
     cs.id = $stateParams.costCenterId;
     cs.costCenterDetail = {};
 
@@ -28,6 +29,7 @@ app.controller('CostCenterDetailController', [
           cs.costCenterDetail = data.data;
         })
         .catch(function(err) {
+          // TODO handle error
           console.log(err);
         });
     };

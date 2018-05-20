@@ -48,7 +48,7 @@ app.controller('AddCostCenterController', [
       }
 
       cs.isSubmittingForm = true;
-      
+
       AddCostCenterService.createCostCenter(
         preparePayloadToRequest(cs.newCostCenter)
       )
