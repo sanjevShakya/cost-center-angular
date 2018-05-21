@@ -7,19 +7,20 @@ app.controller('CostCenterController', [
 
   function($http, $state, $location, APP_CONSTANTS, CostCenterService) {
     const cs = this;
+
+    cs.page = 1;
+    cs.pages = [];
+    cs.totalPages = 0;
+    cs.hasMore = true;
     cs.searchValue = '';
+    cs.costCenters = [];
+    cs.isVisible = false;
+    cs.totalCostCenters = 0;
     cs.isSearchActive = false;
     cs.isListFetching = false;
     cs.isActivatingRecords = false;
     cs.isDeactivatingRecords = false;
-    cs.isVisible = false;
-    cs.page = 1;
-    cs.hasMore = true;
     cs.pageSize = APP_CONSTANTS.pageSize;
-    cs.costCenters = [];
-    cs.totalCostCenters = 0;
-    cs.totalPages = 0;
-    cs.pages = [];
 
     const prepareCostCenterData = function(data) {
       return Object.assign(
@@ -40,6 +41,7 @@ app.controller('CostCenterController', [
         .then(function(data) {
           cs.totalCostCenters = data.data.length || 0;
           cs.totalPages = Math.ceil(cs.totalCostCenters / cs.pageSize);
+
           if (cs.totalPages) {
             const newPages = [];
             for (var i = 1; i <= cs.totalPages; i++) {
@@ -52,6 +54,36 @@ app.controller('CostCenterController', [
           // TODO handle error
 
           console.log(err);
+        });
+    };
+
+    const preparePayloadToRequest = function(costCenter) {
+      return {
+        code: costCenter.code,
+        status: costCenter.status,
+        createdAt: costCenter.createdAt,
+        description: costCenter.description,
+        companyCode: costCenter.companyCode,
+        profitCenter: costCenter.profitCenter,
+      };
+    };
+
+    const fetchCostCenters = function(page, searchValue) {
+      page = !page ? cs.page : page;
+
+      searchValue = !searchValue ? cs.searchValue : searchValue;
+
+      CostCenterService.fetchCostCenters(page, cs.pageSize, searchValue)
+        .then(function(data) {
+          cs.costCenters = data.data.map(prepareCostCenterData);
+          cs.page = page;
+          cs.hasMore = !(cs.costCenters.length < cs.pageSize && cs.page !== 1);
+          cs.isSearchActive = false;
+        })
+        .catch(function(error) {
+          // TODO handle error
+          console.log(error);
+          cs.isSearchActive = false;
         });
     };
 
@@ -73,44 +105,6 @@ app.controller('CostCenterController', [
     };
 
     init();
-
-    const preparePayloadToRequest = function(costCenter) {
-      return {
-        code: costCenter.code,
-        status: costCenter.status,
-        createdAt: costCenter.createdAt,
-        description: costCenter.description,
-        companyCode: costCenter.companyCode,
-        profitCenter: costCenter.profitCenter,
-      };
-    };
-
-    const fetchCostCenters = function(page, searchValue) {
-      if (!page) {
-        page = cs.page;
-      }
-
-      if (!searchValue) {
-        searchValue = cs.searchValue;
-      }
-
-      CostCenterService.fetchCostCenters(page, cs.pageSize, searchValue)
-        .then(function(data) {
-          cs.costCenters = data.data.map(prepareCostCenterData);
-          cs.page = page;
-          if (cs.costCenters.length < cs.pageSize && cs.page !== 1) {
-            cs.hasMore = false;
-          } else {
-            cs.hasMore = true;
-          }
-          cs.isSearchActive = false;
-        })
-        .catch(function(error) {
-          // TODO handle error
-          console.log(error);
-          cs.isSearchActive = false;
-        });
-    };
 
     cs.onShowDetail = function(id) {
       $state.go('cost-center-detail', { costCenterId: id });
@@ -144,6 +138,7 @@ app.controller('CostCenterController', [
       if (!inActiveCostCenters) {
         return;
       }
+
       cs.isActivatingRecords = true;
 
       Promise.all(
@@ -239,6 +234,7 @@ app.controller('CostCenterController', [
       if (!cs.hasMore) {
         return;
       }
+
       cs.fetchPage(page);
     };
 
