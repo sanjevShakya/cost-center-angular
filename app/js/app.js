@@ -27,18 +27,3 @@ app.config([
     $urlRouterProvider.otherwise('/cost-center');
   },
 ]);
-
-app.component('spinner', {
-  templateUrl: 'partials/spinner.html',
-  controller: 'SpinnerController',
-  controllerAs: 'vm',
-  bindings: {
-    visible: '=',
-  },
-});
-
-app.controller('SpinnerController', [
-  function() {
-    const vm = this;
-  },
-]);
